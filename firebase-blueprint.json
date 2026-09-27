@@ -1,0 +1,131 @@
+{
+  "entities": {
+    "Room": {
+      "title": "Room",
+      "description": "Active game room and match state for Egyptian Basra",
+      "type": "object",
+      "properties": {
+        "roomId": {
+          "type": "string",
+          "description": "Unique 6-character room code or id"
+        },
+        "hostId": {
+          "type": "string",
+          "description": "Player identifier for host"
+        },
+        "hostName": {
+          "type": "string",
+          "description": "Display name of the host"
+        },
+        "hostAvatar": {
+          "type": "string",
+          "description": "Avatar URL or key for host"
+        },
+        "guestId": {
+          "type": "string",
+          "description": "Player identifier for guest"
+        },
+        "guestName": {
+          "type": "string",
+          "description": "Display name of guest"
+        },
+        "guestAvatar": {
+          "type": "string",
+          "description": "Avatar URL or key for guest"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["waiting", "playing", "completed", "abandoned"],
+          "description": "Current status of the game room"
+        },
+        "targetScore": {
+          "type": "number",
+          "description": "Target score for the match (e.g. 51, 101)"
+        },
+        "currentTurn": {
+          "type": "string",
+          "description": "ID of player whose turn it is"
+        },
+        "roundNumber": {
+          "type": "number",
+          "description": "Current round count"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": ["roomId", "hostId", "hostName", "status", "targetScore"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Registered player profile, ranking stats, and achievements",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Unique Firebase Auth user ID"
+        },
+        "username": {
+          "type": "string",
+          "description": "Display username of the player"
+        },
+        "email": {
+          "type": "string",
+          "description": "Account email"
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name of the player"
+        },
+        "avatar": {
+          "type": "string",
+          "description": "Avatar image URL or key"
+        },
+        "frameId": {
+          "type": "string",
+          "description": "Equipped avatar frame identifier"
+        },
+        "coins": {
+          "type": "number",
+          "description": "Player gold coins balance"
+        },
+        "matchesPlayed": {
+          "type": "number",
+          "description": "Total matches played"
+        },
+        "matchesWon": {
+          "type": "number",
+          "description": "Total matches won"
+        },
+        "totalBasras": {
+          "type": "number",
+          "description": "Total basras made"
+        },
+        "highestMatchScore": {
+          "type": "number",
+          "description": "Highest score achieved in a single match"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last activity timestamp"
+        }
+      },
+      "required": ["userId", "name", "coins", "matchesWon", "totalBasras"]
+    }
+  },
+  "firestore": {
+    "/rooms/{roomId}": {
+      "schema": "Room",
+      "description": "Active multiplayer Basra rooms collection"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Player profile, leaderboard statistics, and wallet"
+    }
+  }
+}

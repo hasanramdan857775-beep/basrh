@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Rooms collection for online multiplayer Basra
+    match /rooms/{roomId} {
+      allow read: if true;
+      allow create: if request.resource.data.roomId == roomId
+                    && request.resource.data.hostId is string
+                    && request.resource.data.status in ['waiting', 'playing'];
+      allow update: if request.resource.data.roomId == roomId;
+      allow delete: if false;
+    }
+
+    // Users collection for player profiles, wallet, and real-time leaderboards
+    match /users/{userId} {
+      allow read: if true;
+      allow create, update: if (request.auth != null && request.auth.uid == userId)
+                            || (request.resource.data.userId == userId);
+      allow delete: if false;
+    }
+
+    // Default deny catch-all for any other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
