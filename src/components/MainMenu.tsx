@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Award, Settings, BookOpen, BarChart3, Users, Globe, Play, Sparkles, ShoppingBag, Calendar, Gift, Zap, Shield, Flame, Trophy, LogIn, LogOut, KeyRound } from 'lucide-react';
+import { Award, Settings, BookOpen, BarChart3, Users, Globe, Play, Sparkles, ShoppingBag, Calendar, Gift, Zap, Shield, Flame, Trophy, LogIn, LogOut, KeyRound, Smartphone, Download } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { soundFx } from '../utils/soundEffects';
 import { AIDifficulty, DailyChallenge } from '../types/game';
@@ -21,6 +21,7 @@ interface MainMenuProps {
   onOpenOnlineLobby: () => void;
   onOpenAuth: () => void;
   onSignOut: () => void;
+  onOpenApkExport?: () => void;
   isLoggedIn: boolean;
   dailyChallenge: DailyChallenge;
   coins: number;
@@ -44,6 +45,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({
   onOpenOnlineLobby,
   onOpenAuth,
   onSignOut,
+  onOpenApkExport,
   isLoggedIn,
   dailyChallenge,
   coins,
@@ -446,6 +448,21 @@ export const MainMenu: React.FC<MainMenuProps> = ({
             <Settings className="w-3.5 h-3.5 text-amber-400" />
             <span>الخيارات</span>
           </button>
+
+          {/* APK / Mobile Install */}
+          {onOpenApkExport && (
+            <button
+              onClick={() => {
+                soundFx.playClick();
+                onOpenApkExport();
+              }}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-emerald-950/80 to-teal-950/80 hover:from-emerald-900 hover:to-teal-900 border border-emerald-500/60 text-emerald-300 hover:text-white text-xs font-black transition-all active:scale-95 shadow-sm"
+              title="تثبيت التطبيق على الموبايل أو استخراج ملف APK"
+            >
+              <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
+              <span>تطبيق APK للموبايل 📱</span>
+            </button>
+          )}
 
         </div>
       </motion.footer>

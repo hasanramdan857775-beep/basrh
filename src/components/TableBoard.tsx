@@ -49,6 +49,7 @@ export const TableBoard: React.FC<TableBoardProps> = ({
   onUpdateSettings,
 }) => {
   // Game state
+  const particlesRef = useRef<TableParticlesHandle | null>(null);
   const [deck, setDeck] = useState<Card[]>([]);
   const [tableCards, setTableCards] = useState<Card[]>([]);
   const [player1, setPlayer1] = useState<PlayerStats>({
@@ -316,20 +317,18 @@ export const TableBoard: React.FC<TableBoardProps> = ({
       const eatenIds = new Set(eatResult.eatenCards.map(c => c.id));
       setEatenCardIds(eatenIds);
 
-      // Trigger shake when Basra happens!
+      // Trigger shake & particle effects when Basra happens!
       if (eatResult.isBasra) {
         setIsTableShaking(true);
         setTimeout(() => setIsTableShaking(false), 700);
 
         soundFx.playBasra();
-        try {
-          confetti({
-            particleCount: 90,
-            spread: 80,
-            origin: { y: 0.55 },
-            colors: ['#F59E0B', '#EF4444', '#10B981', '#3B82F6', '#FFFFFF'],
-          });
-        } catch {}
+        particlesRef.current?.trigger(
+          eatResult.isJackBasra ? 'jack_basra' : 'basra',
+          undefined,
+          undefined,
+          eatResult.isJackBasra ? settings.jackBasraValue : 10
+        );
 
         if (eatResult.isJackBasra) {
           newJackBasraCount += 1;
@@ -358,9 +357,11 @@ export const TableBoard: React.FC<TableBoardProps> = ({
         // Regular eat or sweep
         if (eatResult.reason === 'jack_sweep') {
           soundFx.playSweep();
+          particlesRef.current?.trigger('sweep');
           setLastActionText(`${player.name} قش الترابيزة بالولد (${eatResult.eatenCards.length} كروت)!`);
         } else {
           soundFx.playEat();
+          particlesRef.current?.trigger('eat');
           setLastActionText(`${player.name} أكل ${eatResult.eatenCards.length} كروت بالكارت [${card.rank}]`);
         }
       }
@@ -735,7 +736,9 @@ export const TableBoard: React.FC<TableBoardProps> = ({
       </div>
 
       {/* CENTER: Table Felt Playing Surface matching screenshot 1 & 2 */}
-      <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-2">
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-2 w-full">
+        {/* Dynamic Card Eating & Basra Particles Overlay */}
+        <TableParticlesOverlay ref={particlesRef} />
         
         {/* Deck stack on the side */}
         <div className="absolute left-2 sm:left-auto sm:right-10 top-1/2 -translate-y-1/2 flex flex-col items-center z-10 pointer-events-none opacity-80 sm:opacity-100">

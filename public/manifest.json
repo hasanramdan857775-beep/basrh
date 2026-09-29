@@ -1,0 +1,66 @@
+{
+  "id": "/",
+  "name": "باصرة مصرية - كوتشينة القهوة أونلاين",
+  "short_name": "باصرة مصرية",
+  "description": "لعبة الباصرة المصرية الكلاسيكية الأصلية بأجواء القهوة الشعبية، ذكاء اصطناعي، ولعب أونلاين حقيقي مع الأصدقاء.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "theme_color": "#120C07",
+  "background_color": "#0A0503",
+  "prefer_related_applications": false,
+  "categories": ["games", "entertainment"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "لعب فوري (ضد المعلم)",
+      "short_name": "لعب فوري",
+      "description": "ابدأ جولة باصرة سريعة ضد الذكاء الاصطناعي",
+      "url": "/?mode=play",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "غرف الأونلاين",
+      "short_name": "أونلاين",
+      "description": "انضم أو أنشئ ترابيزة باصرة مع الأصدقاء",
+      "url": "/?mode=online",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "سلم المتصدرين",
+      "short_name": "المتصدرين",
+      "description": "شاهد ترتيب أفضل معلمين الباصرة",
+      "url": "/?mode=leaderboard",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}

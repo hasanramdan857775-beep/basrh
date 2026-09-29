@@ -20,6 +20,7 @@ import {
 import { Card, OnlineRoomData, GameSettings, DisplayMode } from '../types/game';
 import { PlayingCard } from './PlayingCard';
 import { ChatAndEmotesModal, EmoteItem } from './ChatAndEmotesModal';
+import { TableParticlesOverlay, TableParticlesHandle } from './TableParticlesOverlay';
 import {
   subscribeToRoom,
   playOnlineCard,
@@ -55,6 +56,7 @@ export const OnlineTableBoard: React.FC<OnlineTableBoardProps> = ({
   userProfile,
 }) => {
   const [room, setRoom] = useState<OnlineRoomData>(initialRoom);
+  const particlesRef = useRef<TableParticlesHandle | null>(null);
   const [copiedLink, setCopiedLink] = useState(false);
   const [activeBasraBanner, setActiveBasraBanner] = useState<{
     text: string;
@@ -162,12 +164,12 @@ export const OnlineTableBoard: React.FC<OnlineTableBoardProps> = ({
 
           if (act.isBasra) {
             soundFx.playBasra();
-            confetti({
-              particleCount: 50,
-              spread: 70,
-              origin: { y: 0.6 },
-              colors: ['#F59E0B', '#EF4444', '#10B981'],
-            });
+            particlesRef.current?.trigger(
+              act.isJackBasra ? 'jack_basra' : 'basra',
+              undefined,
+              undefined,
+              act.basraPoints
+            );
             setActiveBasraBanner({
               text: act.isJackBasra ? 'باصرة ولد نار! 🔥' : 'باصرة يا معلم! 💥',
               subText: `${act.playerName} مسح الترابيزة (+${act.basraPoints} نقطة)`,
@@ -176,6 +178,11 @@ export const OnlineTableBoard: React.FC<OnlineTableBoardProps> = ({
             setTimeout(() => setActiveBasraBanner(null), 2500);
           } else if (act.eatCount > 0) {
             soundFx.playCardEat();
+            if (act.card.rank === 'J') {
+              particlesRef.current?.trigger('sweep');
+            } else {
+              particlesRef.current?.trigger('eat');
+            }
             setLastActionText(`${act.playerName} أكل ${act.eatCount} كروت بـ ${act.card.rank}`);
           } else {
             soundFx.playCardFlip();
@@ -437,7 +444,9 @@ export const OnlineTableBoard: React.FC<OnlineTableBoardProps> = ({
       </div>
 
       {/* CENTER PLAYING FELT */}
-      <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-2 sm:px-4 py-2">
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-2 sm:px-4 py-2 w-full">
+        {/* Dynamic Card Eating & Basra Particles Overlay */}
+        <TableParticlesOverlay ref={particlesRef} />
         
         {/* Remaining Deck Pile on the Side */}
         <div className="absolute right-2 sm:right-8 top-1/2 -translate-y-1/2 flex flex-col items-center pointer-events-none opacity-80 sm:opacity-100">

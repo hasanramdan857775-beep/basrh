@@ -14,6 +14,7 @@ import { LeaderboardModal } from './components/LeaderboardModal';
 import { AuthModal } from './components/AuthModal';
 import { StoreAchievementsModal } from './components/StoreAchievementsModal';
 import { SettingsModal } from './components/SettingsModal';
+import { ApkExportModal } from './components/ApkExportModal';
 import { TutorialPractice } from './components/TutorialPractice';
 import { EditProfileModal } from './components/EditProfileModal';
 import { DailyChallengeModal } from './components/DailyChallengeModal';
@@ -162,6 +163,7 @@ export default function App() {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isStoreOpen, setIsStoreOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isApkExportOpen, setIsApkExportOpen] = useState(false);
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
   const [isDailyChallengeOpen, setIsDailyChallengeOpen] = useState(false);
 
@@ -433,6 +435,7 @@ export default function App() {
           onOpenOnlineLobby={() => setIsOnlineLobbyOpen(true)}
           onOpenAuth={() => setIsAuthOpen(true)}
           onSignOut={handleSignOut}
+          onOpenApkExport={() => setIsApkExportOpen(true)}
           isLoggedIn={!!currentUserData}
           dailyChallenge={dailyChallenge}
           coins={coins}
@@ -578,6 +581,11 @@ export default function App() {
         onClose={() => setIsSettingsOpen(false)}
         settings={settings}
         onUpdateSettings={(newSettings) => setSettings(prev => ({ ...prev, ...newSettings }))}
+      />
+
+      <ApkExportModal
+        isOpen={isApkExportOpen}
+        onClose={() => setIsApkExportOpen(false)}
       />
     </main>
   );
