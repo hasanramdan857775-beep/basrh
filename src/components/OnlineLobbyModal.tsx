@@ -126,10 +126,10 @@ export const OnlineLobbyModal: React.FC<OnlineLobbyModalProps> = ({
 
   return (
     <ModalWrapper isOpen={isOpen} onClose={onClose} maxWidth="max-w-lg">
-      <div className="relative w-full flex flex-col bg-[#160E08] border-2 border-[#8C6D46] rounded-2xl shadow-2xl overflow-hidden text-neutral-100">
+      <div className="relative w-full max-h-[88dvh] flex flex-col bg-[#160E08] border-2 border-[#8C6D46] rounded-2xl shadow-2xl overflow-hidden text-neutral-100">
         
         {/* Header */}
-        <div className="relative flex flex-col items-center pt-5 pb-3 border-b border-[#523A25] bg-gradient-to-b from-[#24170E] to-[#160E08]">
+        <div className="relative flex flex-col items-center pt-5 pb-3 border-b border-[#523A25] bg-gradient-to-b from-[#24170E] to-[#160E08] shrink-0">
           <button
             onClick={() => {
               soundFx.playClick();
@@ -185,8 +185,8 @@ export const OnlineLobbyModal: React.FC<OnlineLobbyModalProps> = ({
           )}
         </div>
 
-        {/* Modal Body */}
-        <div className="p-4 sm:p-6 space-y-4">
+        {/* Modal Body - Smooth vertical scrollable */}
+        <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1 overscroll-contain custom-scrollbar">
           
           {errorMsg && (
             <motion.div

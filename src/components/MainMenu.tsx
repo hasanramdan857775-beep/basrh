@@ -61,16 +61,18 @@ export const MainMenu: React.FC<MainMenuProps> = ({
 
   return (
     <div
-      className="relative w-full min-h-[100dvh] overflow-x-hidden overflow-y-auto overscroll-y-contain flex flex-col justify-between p-3 sm:p-6 lg:p-8 select-none font-['Cairo',sans-serif] bg-neutral-950 touch-manipulation pb-8"
+      className="relative w-full min-h-[100dvh] overflow-x-hidden overflow-y-auto flex flex-col justify-between p-2.5 sm:p-6 lg:p-8 select-none font-['Cairo',sans-serif] bg-neutral-950 touch-manipulation pb-20"
       style={{
         backgroundImage: `radial-gradient(ellipse at 50% 30%, rgba(10, 25, 18, 0.6) 0%, rgba(8, 6, 4, 0.92) 80%), url(${cairoSalonBg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     >
-      {/* Subtle atmospheric gold & emerald ambient glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Strictly contained atmospheric glows so they never cause horizontal slipping */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-64 bg-amber-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-emerald-600/10 rounded-full blur-3xl" />
+      </div>
 
       {/* TOP BAR: Brand Header & Player Profile Card */}
       <motion.header
@@ -255,7 +257,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({
             }}
             className="group relative cursor-pointer p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#5C1616] via-[#7B1E1E] to-[#450F0F] border-2 border-[#D94C4C]/60 hover:border-amber-400 text-white shadow-xl hover:shadow-[0_0_25px_rgba(217,76,76,0.6)] transition-all overflow-hidden"
           >
-            <div className="absolute top-0 right-0 -mr-6 -mt-6 w-24 h-24 bg-white/10 rounded-full blur-xl group-hover:scale-150 transition-transform" />
+            <div className="absolute top-0 right-0 -mr-6 -mt-6 w-24 h-24 bg-white/10 rounded-full blur-xl group-hover:scale-150 transition-transform pointer-events-none" />
             <div className="flex items-start justify-between">
               <div className="w-12 h-12 rounded-xl bg-black/30 border border-white/20 flex items-center justify-center text-2xl shadow-inner group-hover:scale-110 transition-transform">
                 🃏

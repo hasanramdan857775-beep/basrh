@@ -38,10 +38,10 @@ export const DailyChallengeModal: React.FC<DailyChallengeModalProps> = ({
 
   return (
     <ModalWrapper isOpen={isOpen} onClose={onClose} maxWidth="max-w-md">
-      <div className="relative w-full bg-[#1A120B] border-2 border-[#8C6D46] rounded-2xl shadow-2xl overflow-hidden text-neutral-100">
+      <div className="relative w-full max-h-[88dvh] flex flex-col bg-[#1A120B] border-2 border-[#8C6D46] rounded-2xl shadow-2xl overflow-hidden text-neutral-100">
         
         {/* Top Header */}
-        <div className="relative flex flex-col items-center pt-5 pb-4 border-b border-[#5C442A] bg-gradient-to-b from-[#2A1D13] to-[#1A120B]">
+        <div className="relative flex flex-col items-center pt-5 pb-4 border-b border-[#5C442A] bg-gradient-to-b from-[#2A1D13] to-[#1A120B] shrink-0">
           <button
             onClick={() => {
               soundFx.playClick();
@@ -61,8 +61,8 @@ export const DailyChallengeModal: React.FC<DailyChallengeModalProps> = ({
           <p className="text-xs text-amber-200/70 mt-1">مهمة يومية متجددة لجمع ذهب المعلمين</p>
         </div>
 
-        {/* Content Body */}
-        <div className="p-5 sm:p-6 space-y-5">
+        {/* Content Body - Smooth vertical scrollable */}
+        <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1 overscroll-contain custom-scrollbar">
           
           {/* Main Card with glowing border */}
           <div className="p-4 rounded-xl bg-[#24170E] border border-amber-600/50 shadow-inner flex flex-col gap-3">

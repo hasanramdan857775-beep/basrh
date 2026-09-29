@@ -19,10 +19,10 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 }) => {
   return (
     <ModalWrapper isOpen={isOpen} onClose={onClose} maxWidth="max-w-md">
-      <div className="relative w-full flex flex-col bg-[#1A120B] border-2 border-[#8C6D46] rounded-2xl shadow-2xl overflow-hidden text-neutral-100">
+      <div className="relative w-full max-h-[88dvh] flex flex-col bg-[#1A120B] border-2 border-[#8C6D46] rounded-2xl shadow-2xl overflow-hidden text-neutral-100">
         
         {/* Header */}
-        <div className="relative flex flex-col items-center pt-4 pb-3 border-b border-[#5C442A] bg-gradient-to-b from-[#2A1D13] to-[#1A120B]">
+        <div className="relative flex flex-col items-center pt-4 pb-3 border-b border-[#5C442A] bg-gradient-to-b from-[#2A1D13] to-[#1A120B] shrink-0">
           <button
             onClick={() => {
               soundFx.playClick();
@@ -39,8 +39,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           <p className="text-xs text-amber-200/70 mt-1">تخصيص قواعد الباصرة وأجواء اللعب</p>
         </div>
 
-        {/* Content */}
-        <div className="p-4 sm:p-6 space-y-4">
+        {/* Content - Smooth vertical scrollable */}
+        <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1 overscroll-contain custom-scrollbar">
           
           {/* Target Score */}
           <div className="p-3 rounded-xl bg-[#24170E] border border-[#543D24]">

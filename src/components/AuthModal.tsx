@@ -152,10 +152,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({
 
   return (
     <ModalWrapper isOpen={isOpen} onClose={onClose} maxWidth="max-w-md">
-      <div className="w-full flex flex-col bg-[#1A120B] border-2 border-[#8C6D46] rounded-2xl shadow-2xl overflow-hidden text-neutral-100 font-['Cairo',sans-serif]">
+      <div className="w-full max-h-[88dvh] flex flex-col bg-[#1A120B] border-2 border-[#8C6D46] rounded-2xl shadow-2xl overflow-hidden text-neutral-100 font-['Cairo',sans-serif]">
         
         {/* Header */}
-        <div className="relative pt-4 pb-3 px-4 border-b border-[#5C442A] bg-gradient-to-r from-[#2A180E] via-[#3F2414] to-[#2A180E] text-center">
+        <div className="relative pt-4 pb-3 px-4 border-b border-[#5C442A] bg-gradient-to-r from-[#2A180E] via-[#3F2414] to-[#2A180E] text-center shrink-0">
           <button
             onClick={() => {
               soundFx.playClick();
@@ -216,8 +216,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           </button>
         </div>
 
-        {/* Form Body */}
-        <form onSubmit={handleSubmit} className="p-4 sm:p-5 space-y-3.5">
+        {/* Form Body - Smooth vertical scrollable */}
+        <form onSubmit={handleSubmit} className="p-4 sm:p-5 space-y-3.5 overflow-y-auto flex-1 overscroll-contain custom-scrollbar">
           
           {errorMsg && (
             <div className="p-2.5 rounded-xl bg-red-950/80 border border-red-500/50 text-red-200 text-xs flex items-center gap-2">

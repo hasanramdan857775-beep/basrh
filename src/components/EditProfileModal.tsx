@@ -75,10 +75,10 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
 
   return (
     <ModalWrapper isOpen={isOpen} onClose={onClose} maxWidth="max-w-md">
-      <div className="relative w-full bg-[#1A120B] border-2 border-[#8C6D46] rounded-2xl shadow-2xl overflow-hidden text-neutral-100">
+      <div className="relative w-full max-h-[88dvh] flex flex-col bg-[#1A120B] border-2 border-[#8C6D46] rounded-2xl shadow-2xl overflow-hidden text-neutral-100">
         
         {/* Header */}
-        <div className="relative flex flex-col items-center pt-4 pb-3 border-b border-[#5C442A] bg-gradient-to-b from-[#2A1D13] to-[#1A120B]">
+        <div className="relative flex flex-col items-center pt-4 pb-3 border-b border-[#5C442A] bg-gradient-to-b from-[#2A1D13] to-[#1A120B] shrink-0">
           <button
             onClick={() => {
               soundFx.playClick();
@@ -99,7 +99,7 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
         </div>
 
         {/* Form Body */}
-        <form onSubmit={handleSave} className="p-3 sm:p-5 space-y-4 max-h-[82vh] overflow-y-auto">
+        <form onSubmit={handleSave} className="p-3 sm:p-5 space-y-4 overflow-y-auto flex-1 overscroll-contain custom-scrollbar">
           
           {/* Active Preview */}
           <div className="flex items-center justify-center gap-3 bg-[#24170E] p-2.5 rounded-xl border border-[#4D351F]">

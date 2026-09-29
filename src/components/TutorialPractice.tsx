@@ -157,11 +157,11 @@ export const TutorialPractice: React.FC<TutorialPracticeProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-2xl flex flex-col bg-[#1A120B] border-2 border-[#8C6D46] rounded-2xl shadow-2xl overflow-hidden text-neutral-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto overscroll-contain">
+      <div className="relative w-full max-w-2xl max-h-[90dvh] flex flex-col bg-[#1A120B] border-2 border-[#8C6D46] rounded-2xl shadow-2xl overflow-hidden text-neutral-100 my-auto">
         
         {/* Header */}
-        <div className="relative flex flex-col items-center pt-4 pb-3 border-b border-[#5C442A] bg-gradient-to-b from-[#2A1D13] to-[#1A120B]">
+        <div className="relative flex flex-col items-center pt-4 pb-3 border-b border-[#5C442A] bg-gradient-to-b from-[#2A1D13] to-[#1A120B] shrink-0">
           <button
             onClick={() => {
               soundFx.playClick();
@@ -205,8 +205,8 @@ export const TutorialPractice: React.FC<TutorialPracticeProps> = ({
           </div>
         </div>
 
-        {/* Practice Arena */}
-        <div className="p-4 sm:p-6 space-y-6">
+        {/* Practice Arena - Smooth vertical scrollable */}
+        <div className="p-4 sm:p-6 space-y-6 overflow-y-auto flex-1 overscroll-contain custom-scrollbar">
           
           <div className="p-3.5 rounded-xl bg-[#24170E] border border-[#543D24]">
             <h4 className="font-bold text-amber-300 text-sm mb-1">{currentStep.title}</h4>
