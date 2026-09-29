@@ -61,11 +61,12 @@ export const MainMenu: React.FC<MainMenuProps> = ({
 
   return (
     <div
-      className="relative w-full min-h-[100dvh] overflow-x-hidden overflow-y-auto flex flex-col justify-between p-2.5 sm:p-6 lg:p-8 select-none font-['Cairo',sans-serif] bg-neutral-950 touch-manipulation pb-20"
+      className="relative w-full h-full overflow-x-hidden overflow-y-auto overscroll-y-contain flex flex-col justify-between p-2.5 sm:p-6 lg:p-8 select-none font-['Cairo',sans-serif] bg-neutral-950 touch-pan-y pb-32 custom-scrollbar"
       style={{
         backgroundImage: `radial-gradient(ellipse at 50% 30%, rgba(10, 25, 18, 0.6) 0%, rgba(8, 6, 4, 0.92) 80%), url(${cairoSalonBg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        touchAction: 'pan-y',
       }}
     >
       {/* Strictly contained atmospheric glows so they never cause horizontal slipping */}
@@ -242,7 +243,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({
         </motion.div>
 
         {/* PRIMARY ACTION CARDS GRID (Modern, clean, and distinct) */}
-        <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 touch-pan-y">
           
           {/* Card 1: العب الآن ضد الذكاء الاصطناعي (Hero Primary) */}
           <motion.div
@@ -251,11 +252,12 @@ export const MainMenu: React.FC<MainMenuProps> = ({
             transition={{ duration: 0.4, delay: 0.15 }}
             whileHover={{ y: -4, scale: 1.01 }}
             whileTap={{ scale: 0.98 }}
+            style={{ touchAction: 'pan-y' }}
             onClick={() => {
               soundFx.playClick();
               setShowDifficultySelect(true);
             }}
-            className="group relative cursor-pointer p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#5C1616] via-[#7B1E1E] to-[#450F0F] border-2 border-[#D94C4C]/60 hover:border-amber-400 text-white shadow-xl hover:shadow-[0_0_25px_rgba(217,76,76,0.6)] transition-all overflow-hidden"
+            className="group relative cursor-pointer p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#5C1616] via-[#7B1E1E] to-[#450F0F] border-2 border-[#D94C4C]/60 hover:border-amber-400 text-white shadow-xl hover:shadow-[0_0_25px_rgba(217,76,76,0.6)] transition-all overflow-hidden touch-pan-y"
           >
             <div className="absolute top-0 right-0 -mr-6 -mt-6 w-24 h-24 bg-white/10 rounded-full blur-xl group-hover:scale-150 transition-transform pointer-events-none" />
             <div className="flex items-start justify-between">
@@ -285,11 +287,12 @@ export const MainMenu: React.FC<MainMenuProps> = ({
             transition={{ duration: 0.4, delay: 0.2 }}
             whileHover={{ y: -4, scale: 1.01 }}
             whileTap={{ scale: 0.98 }}
+            style={{ touchAction: 'pan-y' }}
             onClick={() => {
               soundFx.playClick();
               onOpenDailyChallenge();
             }}
-            className="group relative cursor-pointer p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#2D1D12] via-[#3D2718] to-[#1E120A] border-2 border-amber-600/60 hover:border-amber-400 text-white shadow-xl hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] transition-all overflow-hidden"
+            className="group relative cursor-pointer p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#2D1D12] via-[#3D2718] to-[#1E120A] border-2 border-amber-600/60 hover:border-amber-400 text-white shadow-xl hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] transition-all overflow-hidden touch-pan-y"
           >
             <div className="flex items-start justify-between">
               <div className="w-12 h-12 rounded-xl bg-amber-950/80 border border-amber-500/40 flex items-center justify-center text-2xl shadow-inner group-hover:rotate-12 transition-transform">
@@ -328,11 +331,12 @@ export const MainMenu: React.FC<MainMenuProps> = ({
             transition={{ duration: 0.4, delay: 0.25 }}
             whileHover={{ y: -4, scale: 1.01 }}
             whileTap={{ scale: 0.98 }}
+            style={{ touchAction: 'pan-y' }}
             onClick={() => {
               soundFx.playClick();
               onOpenOnlineLobby();
             }}
-            className="group relative cursor-pointer p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#12241F] via-[#1A3830] to-[#0E1B17] border-2 border-emerald-600/60 hover:border-emerald-400 text-white shadow-xl hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] transition-all overflow-hidden"
+            className="group relative cursor-pointer p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#12241F] via-[#1A3830] to-[#0E1B17] border-2 border-emerald-600/60 hover:border-emerald-400 text-white shadow-xl hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] transition-all overflow-hidden touch-pan-y"
           >
             <div className="flex items-start justify-between">
               <div className="w-12 h-12 rounded-xl bg-emerald-950/80 border border-emerald-500/40 flex items-center justify-center text-2xl shadow-inner group-hover:scale-110 transition-transform">
@@ -356,118 +360,234 @@ export const MainMenu: React.FC<MainMenuProps> = ({
 
         </div>
 
-      </main>
+        {/* Mobile Swipe-Up Helper Prompt */}
+        <div className="w-full max-w-4xl mt-5 mb-2 flex items-center justify-between px-2 text-amber-200/80">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse" />
+            <span className="text-xs sm:text-sm font-black font-['El_Messiri',serif] text-amber-200">
+              باقي القوائم والألعاب والخدمات
+            </span>
+          </div>
+          <div className="flex items-center gap-1 text-[11px] font-bold text-amber-400 bg-[#24170E] px-2.5 py-1 rounded-full border border-amber-600/40">
+            <span>اسحب للأعلى</span>
+            <span className="text-xs animate-bounce inline-block">⇣</span>
+          </div>
+        </div>
 
-      {/* BOTTOM NAVIGATION DOCK: Utility & Secondary Game Features */}
-      <motion.footer
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.25 }}
-        className="relative z-10 w-full flex items-center justify-center"
-      >
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 bg-[#160F0A]/90 backdrop-blur-md p-2 sm:p-2.5 rounded-2xl border border-[#523A25] shadow-2xl max-w-3xl">
+        {/* ALL REMAINING MENUS GRID (Rich 2-cols mobile / 4-cols desktop) */}
+        <div className="w-full max-w-4xl grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 touch-pan-y">
           
-          {/* Practice / Trainer */}
+          {/* 1. تدريب الحريف */}
           <button
+            style={{ touchAction: 'pan-y' }}
             onClick={() => {
               soundFx.playClick();
               onOpenTutorial();
             }}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#24170E] hover:bg-[#382315] border border-[#543D24] text-amber-200 hover:text-white text-xs font-bold transition-all active:scale-95"
+            className="p-3 rounded-2xl bg-gradient-to-br from-[#26180E] to-[#1A1009] border border-[#5A3F27] hover:border-amber-400 text-right flex flex-col justify-between transition-all active:scale-95 shadow-md group touch-pan-y"
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <span>تدريب الحريف</span>
+            <div className="flex items-center justify-between w-full mb-1.5">
+              <div className="w-8 h-8 rounded-xl bg-amber-950/80 border border-amber-500/40 flex items-center justify-center text-amber-300 group-hover:scale-110 transition-transform">
+                <Sparkles className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] text-amber-400 font-bold">تعليم</span>
+            </div>
+            <div>
+              <span className="text-xs sm:text-sm font-black text-amber-100 block group-hover:text-amber-300 transition-colors">
+                تدريب الحريف
+              </span>
+              <span className="text-[10px] text-neutral-400">مدرسة أصول اللعب</span>
+            </div>
           </button>
 
-          {/* Pass & Play (Local 2 Players) */}
+          {/* 2. جهاز واحد (٢ لاعبين) */}
           <button
+            style={{ touchAction: 'pan-y' }}
             onClick={() => {
               soundFx.playClick();
               onStartGame('medium', true);
             }}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#24170E] hover:bg-[#382315] border border-[#543D24] text-amber-200 hover:text-white text-xs font-bold transition-all active:scale-95"
+            className="p-3 rounded-2xl bg-gradient-to-br from-[#121B26] to-[#0D131C] border border-[#2B4360] hover:border-blue-400 text-right flex flex-col justify-between transition-all active:scale-95 shadow-md group touch-pan-y"
           >
-            <Users className="w-3.5 h-3.5 text-amber-400" />
-            <span>جهاز واحد (٢ لاعبين)</span>
+            <div className="flex items-center justify-between w-full mb-1.5">
+              <div className="w-8 h-8 rounded-xl bg-blue-950/80 border border-blue-500/40 flex items-center justify-center text-blue-300 group-hover:scale-110 transition-transform">
+                <Users className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] text-blue-400 font-bold">محلي</span>
+            </div>
+            <div>
+              <span className="text-xs sm:text-sm font-black text-blue-100 block group-hover:text-blue-300 transition-colors">
+                جهاز واحد (٢ لاعبين)
+              </span>
+              <span className="text-[10px] text-neutral-400">لعب وجهاً لوجه</span>
+            </div>
           </button>
 
-          {/* Rules / How To Play */}
+          {/* 3. قوانين اللعبة */}
           <button
+            style={{ touchAction: 'pan-y' }}
             onClick={() => {
               soundFx.playClick();
               onOpenHowToPlay();
             }}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#24170E] hover:bg-[#382315] border border-[#543D24] text-amber-200 hover:text-white text-xs font-bold transition-all active:scale-95"
+            className="p-3 rounded-2xl bg-gradient-to-br from-[#26180E] to-[#1A1009] border border-[#5A3F27] hover:border-amber-400 text-right flex flex-col justify-between transition-all active:scale-95 shadow-md group touch-pan-y"
           >
-            <BookOpen className="w-3.5 h-3.5 text-amber-400" />
-            <span>قوانين اللعبة</span>
+            <div className="flex items-center justify-between w-full mb-1.5">
+              <div className="w-8 h-8 rounded-xl bg-amber-950/80 border border-amber-500/40 flex items-center justify-center text-amber-300 group-hover:scale-110 transition-transform">
+                <BookOpen className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] text-amber-400 font-bold">دليل</span>
+            </div>
+            <div>
+              <span className="text-xs sm:text-sm font-black text-amber-100 block group-hover:text-amber-300 transition-colors">
+                قوانين اللعبة
+              </span>
+              <span className="text-[10px] text-neutral-400">الكومي والولد القشاش</span>
+            </div>
           </button>
 
-          {/* Leaderboard */}
+          {/* 4. سلم المتصدرين */}
           <button
+            style={{ touchAction: 'pan-y' }}
             onClick={() => {
               soundFx.playClick();
               onOpenLeaderboard();
             }}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-[#341B0E] to-[#25150C] hover:from-[#482514] hover:to-[#382012] border border-amber-500/60 text-amber-300 hover:text-white text-xs font-black transition-all active:scale-95 shadow-sm"
+            className="p-3 rounded-2xl bg-gradient-to-br from-[#2E1C0A] to-[#1F1306] border border-amber-500/50 hover:border-amber-300 text-right flex flex-col justify-between transition-all active:scale-95 shadow-md group touch-pan-y"
           >
-            <Trophy className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-            <span>سلم المتصدرين</span>
+            <div className="flex items-center justify-between w-full mb-1.5">
+              <div className="w-8 h-8 rounded-xl bg-amber-900/80 border border-amber-400/50 flex items-center justify-center text-amber-300 group-hover:scale-110 transition-transform">
+                <Trophy className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] text-amber-300 font-bold">ترتيب</span>
+            </div>
+            <div>
+              <span className="text-xs sm:text-sm font-black text-amber-200 block group-hover:text-amber-300 transition-colors">
+                سلم المتصدرين
+              </span>
+              <span className="text-[10px] text-amber-300/70">أبطال باصرة مصر</span>
+            </div>
           </button>
 
-          {/* Stats */}
+          {/* 5. سجل المعلم (الإحصائيات) */}
           <button
+            style={{ touchAction: 'pan-y' }}
             onClick={() => {
               soundFx.playClick();
               onOpenStats();
             }}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#24170E] hover:bg-[#382315] border border-[#543D24] text-amber-200 hover:text-white text-xs font-bold transition-all active:scale-95"
+            className="p-3 rounded-2xl bg-gradient-to-br from-[#26180E] to-[#1A1009] border border-[#5A3F27] hover:border-amber-400 text-right flex flex-col justify-between transition-all active:scale-95 shadow-md group touch-pan-y"
           >
-            <BarChart3 className="w-3.5 h-3.5 text-amber-400" />
-            <span>سجل المعلم</span>
+            <div className="flex items-center justify-between w-full mb-1.5">
+              <div className="w-8 h-8 rounded-xl bg-amber-950/80 border border-amber-500/40 flex items-center justify-center text-amber-300 group-hover:scale-110 transition-transform">
+                <BarChart3 className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] text-amber-400 font-bold">أرقام</span>
+            </div>
+            <div>
+              <span className="text-xs sm:text-sm font-black text-amber-100 block group-hover:text-amber-300 transition-colors">
+                سجل المعلم
+              </span>
+              <span className="text-[10px] text-neutral-400">الفوز والباصرات</span>
+            </div>
           </button>
 
-          {/* Store & Royal Frames */}
+          {/* 6. المتجر الملكي */}
           <button
+            style={{ touchAction: 'pan-y' }}
             onClick={() => {
               soundFx.playClick();
               onOpenStore();
             }}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#24170E] hover:bg-[#382315] border border-[#543D24] text-amber-200 hover:text-white text-xs font-bold transition-all active:scale-95"
+            className="p-3 rounded-2xl bg-gradient-to-br from-[#29170E] to-[#1C0F08] border border-amber-600/40 hover:border-amber-300 text-right flex flex-col justify-between transition-all active:scale-95 shadow-md group touch-pan-y"
           >
-            <ShoppingBag className="w-3.5 h-3.5 text-amber-400" />
-            <span>المتجر الملكي</span>
+            <div className="flex items-center justify-between w-full mb-1.5">
+              <div className="w-8 h-8 rounded-xl bg-amber-950/80 border border-amber-500/40 flex items-center justify-center text-amber-300 group-hover:scale-110 transition-transform">
+                <ShoppingBag className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] text-amber-400 font-bold">تسوق</span>
+            </div>
+            <div>
+              <span className="text-xs sm:text-sm font-black text-amber-100 block group-hover:text-amber-300 transition-colors">
+                المتجر الملكي
+              </span>
+              <span className="text-[10px] text-neutral-400">براويز وخلفيات</span>
+            </div>
           </button>
 
-          {/* Settings */}
+          {/* 7. الخيارات والإعدادات */}
           <button
+            style={{ touchAction: 'pan-y' }}
             onClick={() => {
               soundFx.playClick();
               onOpenSettings();
             }}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#24170E] hover:bg-[#382315] border border-[#543D24] text-amber-200 hover:text-white text-xs font-bold transition-all active:scale-95"
+            className="p-3 rounded-2xl bg-gradient-to-br from-[#26180E] to-[#1A1009] border border-[#5A3F27] hover:border-amber-400 text-right flex flex-col justify-between transition-all active:scale-95 shadow-md group touch-pan-y"
           >
-            <Settings className="w-3.5 h-3.5 text-amber-400" />
-            <span>الخيارات</span>
+            <div className="flex items-center justify-between w-full mb-1.5">
+              <div className="w-8 h-8 rounded-xl bg-neutral-900 border border-neutral-700 flex items-center justify-center text-neutral-300 group-hover:scale-110 transition-transform">
+                <Settings className="w-4 h-4" />
+              </div>
+              <span className="text-[10px] text-neutral-400 font-bold">ضبط</span>
+            </div>
+            <div>
+              <span className="text-xs sm:text-sm font-black text-neutral-200 block group-hover:text-amber-300 transition-colors">
+                خيارات اللعبة
+              </span>
+              <span className="text-[10px] text-neutral-400">الصوت والسرعة</span>
+            </div>
           </button>
 
-          {/* APK / Mobile Install */}
-          {onOpenApkExport && (
+          {/* 8. تطبيق APK للموبايل */}
+          {onOpenApkExport ? (
             <button
+              style={{ touchAction: 'pan-y' }}
               onClick={() => {
                 soundFx.playClick();
                 onOpenApkExport();
               }}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-emerald-950/80 to-teal-950/80 hover:from-emerald-900 hover:to-teal-900 border border-emerald-500/60 text-emerald-300 hover:text-white text-xs font-black transition-all active:scale-95 shadow-sm"
-              title="تثبيت التطبيق على الموبايل أو استخراج ملف APK"
+              className="p-3 rounded-2xl bg-gradient-to-br from-[#0F261C] to-[#0A1812] border border-emerald-500/50 hover:border-emerald-300 text-right flex flex-col justify-between transition-all active:scale-95 shadow-md group touch-pan-y"
             >
-              <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
-              <span>تطبيق APK للموبايل 📱</span>
+              <div className="flex items-center justify-between w-full mb-1.5">
+                <div className="w-8 h-8 rounded-xl bg-emerald-950/80 border border-emerald-400/50 flex items-center justify-center text-emerald-300 group-hover:scale-110 transition-transform">
+                  <Smartphone className="w-4 h-4" />
+                </div>
+                <span className="text-[10px] text-emerald-300 font-bold">تثبيت 📱</span>
+              </div>
+              <div>
+                <span className="text-xs sm:text-sm font-black text-emerald-200 block group-hover:text-emerald-300 transition-colors">
+                  تطبيق APK
+                </span>
+                <span className="text-[10px] text-emerald-400/80">تثبيت للأندرويد</span>
+              </div>
+            </button>
+          ) : (
+            <button
+              style={{ touchAction: 'pan-y' }}
+              onClick={() => {
+                soundFx.playClick();
+                onOpenEditProfile();
+              }}
+              className="p-3 rounded-2xl bg-gradient-to-br from-[#26180E] to-[#1A1009] border border-[#5A3F27] hover:border-amber-400 text-right flex flex-col justify-between transition-all active:scale-95 shadow-md group touch-pan-y"
+            >
+              <div className="flex items-center justify-between w-full mb-1.5">
+                <div className="w-8 h-8 rounded-xl bg-amber-950/80 border border-amber-500/40 flex items-center justify-center text-amber-300">
+                  <Award className="w-4 h-4" />
+                </div>
+                <span className="text-[10px] text-amber-400 font-bold">بروفايل</span>
+              </div>
+              <div>
+                <span className="text-xs sm:text-sm font-black text-amber-100 block">
+                  تعديل المعلم
+                </span>
+                <span className="text-[10px] text-neutral-400">الاسم والشخصية</span>
+              </div>
             </button>
           )}
 
         </div>
-      </motion.footer>
+
+      </main>
 
       {/* DIFFICULTY SELECTION MODAL WITH FRAMER MOTION */}
       <ModalWrapper

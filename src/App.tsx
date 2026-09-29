@@ -421,7 +421,7 @@ export default function App() {
   };
 
   return (
-    <main className="w-full min-h-[100dvh] bg-neutral-950 text-neutral-100 select-none overflow-x-hidden font-['Cairo',sans-serif]">
+    <main className="w-full h-[100dvh] bg-neutral-950 text-neutral-100 select-none overflow-hidden font-['Cairo',sans-serif]">
       {currentScreen === 'menu' && (
         <MainMenu
           onStartGame={handleStartGame}

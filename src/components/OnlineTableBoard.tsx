@@ -292,10 +292,11 @@ export const OnlineTableBoard: React.FC<OnlineTableBoardProps> = ({
 
   return (
     <div
-      className={`relative flex flex-col justify-between select-none min-h-[100dvh] overflow-x-hidden overflow-y-auto overscroll-y-contain font-['Cairo',sans-serif] bg-neutral-950 text-neutral-100 touch-manipulation ${containerClasses}`}
+      className={`relative flex flex-col justify-between select-none w-full h-full min-h-[100dvh] overflow-x-hidden overflow-y-auto overscroll-y-contain font-['Cairo',sans-serif] bg-neutral-950 text-neutral-100 touch-pan-y ${containerClasses}`}
       style={{
         backgroundImage: `radial-gradient(ellipse at 50% 50%, rgba(5, 46, 22, 0.7) 0%, rgba(8, 20, 14, 0.95) 75%), url(${tableFeltImg})`,
         backgroundSize: 'cover',
+        touchAction: 'pan-y',
       }}
     >
       {/* Decorative Table Felt Border */}

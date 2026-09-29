@@ -576,13 +576,14 @@ export const TableBoard: React.FC<TableBoardProps> = ({
 
   return (
     <div
-      className={`relative w-full min-h-[100dvh] overflow-x-hidden overflow-y-auto overscroll-y-contain flex flex-col justify-between select-none bg-neutral-950 font-['Cairo',sans-serif] touch-manipulation ${containerClasses} ${
+      className={`relative w-full h-full min-h-[100dvh] overflow-x-hidden overflow-y-auto overscroll-y-contain flex flex-col justify-between select-none bg-neutral-950 font-['Cairo',sans-serif] touch-pan-y ${containerClasses} ${
         isTableShaking ? 'animate-basra-shake' : ''
       }`}
       style={{
         backgroundImage: `radial-gradient(circle at center, rgba(16, 56, 32, 0.7) 0%, rgba(5, 20, 12, 0.95) 100%), url(${tableFeltImg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        touchAction: 'pan-y',
       }}
     >
       {/* Table Felt Decorative Border Rim matching screenshots */}
