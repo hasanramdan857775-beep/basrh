@@ -121,9 +121,15 @@ export const OnlineTableBoard: React.FC<OnlineTableBoardProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isMyTurn, room.status, myHand, selectedCardId]);
 
-  // Click on card: 1st click selects, 2nd click on same card plays it
+  // Click on card: single-tap if enabled, or 1st click selects & 2nd click plays
   const handleCardClick = (card: Card) => {
     if (!isMyTurn || room.status !== 'playing') return;
+
+    if (settings.singleTapPlay) {
+      setSelectedCardId(null);
+      handlePlayCard(card);
+      return;
+    }
 
     if (selectedCardId === card.id) {
       // Second click on the selected card: Play it!
@@ -286,7 +292,7 @@ export const OnlineTableBoard: React.FC<OnlineTableBoardProps> = ({
 
   return (
     <div
-      className={`relative flex flex-col justify-between select-none overflow-hidden font-['Cairo',sans-serif] bg-neutral-950 text-neutral-100 ${containerClasses}`}
+      className={`relative flex flex-col justify-between select-none min-h-[100dvh] overflow-x-hidden overflow-y-auto overscroll-y-contain font-['Cairo',sans-serif] bg-neutral-950 text-neutral-100 touch-manipulation ${containerClasses}`}
       style={{
         backgroundImage: `radial-gradient(ellipse at 50% 50%, rgba(5, 46, 22, 0.7) 0%, rgba(8, 20, 14, 0.95) 75%), url(${tableFeltImg})`,
         backgroundSize: 'cover',
@@ -554,13 +560,13 @@ export const OnlineTableBoard: React.FC<OnlineTableBoardProps> = ({
           </div>
         )}
 
-        {/* My Hand Cards (Interactive with Double-Click) */}
-        <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-2">
+        {/* My Hand Cards (Interactive with Double-Click or Single-Tap) */}
+        <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-2 touch-manipulation">
           {myHand.map((card, idx) => (
             <div
               key={card.id || idx}
-              className="animate-card-slide-bottom"
-              style={{ animationDelay: `${idx * 0.07}s` }}
+              className="animate-card-slide-bottom touch-manipulation"
+              style={{ animationDelay: `${idx * 0.04}s` }}
             >
               <PlayingCard
                 card={card}

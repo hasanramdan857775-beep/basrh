@@ -188,8 +188,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             <div className="flex items-center gap-2">
               <Zap className="w-4 h-4 text-amber-400" />
               <div>
-                <span className="text-xs font-bold text-neutral-200 block">تسريع حركات الكروت</span>
-                <span className="text-[11px] text-neutral-400">رمي وتوزيع سريع بدون تأخير</span>
+                <span className="text-xs font-bold text-neutral-200 block">تسريع حركات الكروت (Turbo)</span>
+                <span className="text-[11px] text-neutral-400">رمي وتوزيع سريع وحركة روبوت فورية</span>
               </div>
             </div>
             <button
@@ -197,13 +197,39 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 soundFx.playClick();
                 onUpdateSettings({ fastAnimations: !settings.fastAnimations });
               }}
-              className={`w-11 h-6 rounded-full transition-colors relative ${
+              className={`w-11 h-6 rounded-full transition-colors relative touch-manipulation ${
                 settings.fastAnimations ? 'bg-amber-600' : 'bg-neutral-800'
               }`}
             >
               <div
                 className={`w-4 h-4 rounded-full bg-white absolute top-1 transition-transform ${
                   settings.fastAnimations ? 'right-1' : 'right-6'
+                }`}
+              />
+            </button>
+          </div>
+
+          {/* Single Tap Play on Mobile */}
+          <div className="p-3 rounded-xl bg-[#24170E] border border-[#543D24] flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Smartphone className="w-4 h-4 text-amber-400" />
+              <div>
+                <span className="text-xs font-bold text-neutral-200 block">اللعب بنقرة واحدة (لمسة للموبايل)</span>
+                <span className="text-[11px] text-neutral-400">رمي الكارت فور لمسه دون الحاجة لنقرتين</span>
+              </div>
+            </div>
+            <button
+              onClick={() => {
+                soundFx.playClick();
+                onUpdateSettings({ singleTapPlay: !settings.singleTapPlay });
+              }}
+              className={`w-11 h-6 rounded-full transition-colors relative touch-manipulation ${
+                settings.singleTapPlay ? 'bg-amber-600' : 'bg-neutral-800'
+              }`}
+            >
+              <div
+                className={`w-4 h-4 rounded-full bg-white absolute top-1 transition-transform ${
+                  settings.singleTapPlay ? 'right-1' : 'right-6'
                 }`}
               />
             </button>

@@ -40,6 +40,7 @@ export interface GameSettings {
   showHints: boolean;
   cardBackId: string;
   fastAnimations: boolean;
+  singleTapPlay?: boolean;
   jackBasraValue: 10 | 20; // Some play with 20 for Jack Basra, others 10
   displayMode: DisplayMode;
 }

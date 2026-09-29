@@ -61,7 +61,7 @@ export const MainMenu: React.FC<MainMenuProps> = ({
 
   return (
     <div
-      className="relative w-full min-h-screen overflow-y-auto sm:overflow-hidden flex flex-col justify-between p-3 sm:p-6 lg:p-8 select-none font-['Cairo',sans-serif] bg-neutral-950"
+      className="relative w-full min-h-[100dvh] overflow-x-hidden overflow-y-auto overscroll-y-contain flex flex-col justify-between p-3 sm:p-6 lg:p-8 select-none font-['Cairo',sans-serif] bg-neutral-950 touch-manipulation pb-8"
       style={{
         backgroundImage: `radial-gradient(ellipse at 50% 30%, rgba(10, 25, 18, 0.6) 0%, rgba(8, 6, 4, 0.92) 80%), url(${cairoSalonBg})`,
         backgroundSize: 'cover',

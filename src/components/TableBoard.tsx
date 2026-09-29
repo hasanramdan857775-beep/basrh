@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Pause, Play, RotateCcw, Volume2, VolumeX, ArrowLeft, Trophy, Flame, HelpCircle, Smartphone, Monitor, RefreshCw, Coffee, MessageSquare, Smile } from 'lucide-react';
+import { Pause, Play, RotateCcw, Volume2, VolumeX, ArrowLeft, Trophy, Flame, HelpCircle, Smartphone, Monitor, RefreshCw, Coffee, MessageSquare, Smile, Zap } from 'lucide-react';
 import { Card, PlayerStats, GameSettings, EatResult, RoundHistoryEntry, AIDifficulty, DisplayMode } from '../types/game';
 import { PlayingCard } from './PlayingCard';
 import { ChatAndEmotesModal, EmoteItem } from './ChatAndEmotesModal';
@@ -320,7 +320,7 @@ export const TableBoard: React.FC<TableBoardProps> = ({
       // Trigger shake & particle effects when Basra happens!
       if (eatResult.isBasra) {
         setIsTableShaking(true);
-        setTimeout(() => setIsTableShaking(false), 700);
+        setTimeout(() => setIsTableShaking(false), 300);
 
         soundFx.playBasra();
         particlesRef.current?.trigger(
@@ -352,7 +352,7 @@ export const TableBoard: React.FC<TableBoardProps> = ({
           setLastActionText(`${player.name} مسح الأرض وعمل باصرة (+١٠ نقاط)!`);
         }
 
-        setTimeout(() => setActiveBasraBanner(null), 2500);
+        setTimeout(() => setActiveBasraBanner(null), 1200);
       } else {
         // Regular eat or sweep
         if (eatResult.reason === 'jack_sweep') {
@@ -514,7 +514,7 @@ export const TableBoard: React.FC<TableBoardProps> = ({
     if (currentTurn === 'p2' && player2.isAI && !isPaused && player2.hand.length > 0 && !isRoundSummaryOpen) {
       setIsBotThinking(true);
 
-      const delay = settings.fastAnimations ? 600 : 1200;
+      const delay = settings.fastAnimations ? 160 : 360;
       const timer = setTimeout(() => {
         try {
           const move = chooseAIMove(
@@ -525,9 +525,9 @@ export const TableBoard: React.FC<TableBoardProps> = ({
             player2.capturedCards.length
           );
 
-          if (move.reason && Math.random() < 0.4) {
+          if (move.reason && Math.random() < 0.3) {
             setBotBanter(move.reason);
-            setTimeout(() => setBotBanter(null), 3000);
+            setTimeout(() => setBotBanter(null), 2000);
           }
 
           executePlayCard(move.card, 'p2');
@@ -543,9 +543,16 @@ export const TableBoard: React.FC<TableBoardProps> = ({
     }
   }, [currentTurn, player2.isAI, player2.hand, tableCards, isPaused, isRoundSummaryOpen]);
 
-  // User click on hand card - 1st click selects card, 2nd click on same card drops/plays it!
+  // User click on hand card - Instant single-tap if enabled, or 2nd click plays
   const handleUserCardClick = (card: Card) => {
     if (currentTurn !== 'p1') return;
+
+    if (settings.singleTapPlay) {
+      // Single-tap instant play for ultra snappy mobile experience
+      setSelectedCardId(null);
+      executePlayCard(card, 'p1');
+      return;
+    }
 
     if (selectedCardId === card.id) {
       // Second click on the selected card: Play it onto the table!
@@ -569,7 +576,7 @@ export const TableBoard: React.FC<TableBoardProps> = ({
 
   return (
     <div
-      className={`relative w-full h-[100dvh] min-h-[520px] max-h-screen overflow-hidden flex flex-col justify-between select-none bg-neutral-950 font-['Cairo',sans-serif] ${containerClasses} ${
+      className={`relative w-full min-h-[100dvh] overflow-x-hidden overflow-y-auto overscroll-y-contain flex flex-col justify-between select-none bg-neutral-950 font-['Cairo',sans-serif] touch-manipulation ${containerClasses} ${
         isTableShaking ? 'animate-basra-shake' : ''
       }`}
       style={{
@@ -678,7 +685,7 @@ export const TableBoard: React.FC<TableBoardProps> = ({
               }
               soundFx.playClick();
             }}
-            className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full border transition-all flex items-center justify-center shadow ${
+            className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full border transition-all flex items-center justify-center shadow touch-manipulation ${
               settings.ambientSound
                 ? 'bg-amber-950/80 border-amber-500/80 text-amber-300 shadow-[0_0_12px_rgba(245,158,11,0.4)]'
                 : 'bg-[#1A120B]/80 border-[#5C442A] text-neutral-500 hover:text-amber-200'
@@ -687,6 +694,25 @@ export const TableBoard: React.FC<TableBoardProps> = ({
           >
             <Coffee className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
+
+          {/* Quick Turbo Speed & Single-Tap Toggle */}
+          {onUpdateSettings && (
+            <button
+              onClick={() => {
+                const nextFast = !settings.fastAnimations;
+                onUpdateSettings({ fastAnimations: nextFast, singleTapPlay: nextFast });
+                soundFx.playClick();
+              }}
+              className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full border transition-all flex items-center justify-center shadow touch-manipulation ${
+                settings.fastAnimations
+                  ? 'bg-amber-500 border-amber-300 text-neutral-950 font-black shadow-[0_0_15px_rgba(245,158,11,0.7)]'
+                  : 'bg-[#1A120B]/80 border-[#5C442A] text-neutral-400 hover:text-amber-200'
+              }`}
+              title={`وضع السرعة الفائقة واللمسة الواحدة: ${settings.fastAnimations ? 'مفعل ⚡ (فائق السرعة)' : 'عادي'}`}
+            >
+              <Zap className="w-4 h-4 sm:w-5 sm:h-5 fill-current" />
+            </button>
+          )}
 
           <button
             onClick={() => {
@@ -846,21 +872,21 @@ export const TableBoard: React.FC<TableBoardProps> = ({
                 handleUserCardClick(card);
               }
             }}
-            className="mb-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 text-neutral-950 text-xs font-black shadow-[0_0_20px_rgba(245,158,11,0.7)] border-2 border-white flex items-center gap-2 cursor-pointer animate-bounce select-none"
+            className="mb-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 text-neutral-950 text-xs font-black shadow-[0_0_20px_rgba(245,158,11,0.7)] border-2 border-white flex items-center gap-2 cursor-pointer animate-bounce select-none touch-manipulation"
           >
-            <span>🎯 انقر الكارت مجدداً (أو اضغط هنا) لرميه على الترابيزة</span>
+            <span>🎯 اضغط هنا (أو انقر الكارت ثانية) للرمي على الترابيزة ⚡</span>
           </div>
         )}
 
         {/* Interactive Hand Cards */}
-        <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-2">
+        <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-2 touch-manipulation">
           {player1.hand.map((card, idx) => {
             const isSelected = selectedCardId === card.id;
             return (
               <div
                 key={card.id}
-                className="animate-card-slide-bottom"
-                style={{ animationDelay: `${idx * 0.07}s` }}
+                className="animate-card-slide-bottom touch-manipulation"
+                style={{ animationDelay: `${idx * 0.04}s` }}
                 onMouseEnter={() => setHoveredCardId(card.id)}
                 onMouseLeave={() => setHoveredCardId(null)}
               >
@@ -870,7 +896,7 @@ export const TableBoard: React.FC<TableBoardProps> = ({
                   isSelectable={currentTurn === 'p1'}
                   isSelected={isSelected}
                   onClick={() => handleUserCardClick(card)}
-                  size="lg"
+                  size={isMobileMode ? 'md' : 'lg'}
                 />
               </div>
             );
@@ -896,7 +922,12 @@ export const TableBoard: React.FC<TableBoardProps> = ({
             </button>
 
             <div className="text-[11px] sm:text-xs text-amber-200/90 font-bold hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-black/40 border border-amber-900/40">
-              {selectedCardId ? (
+              {settings.singleTapPlay ? (
+                <>
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-emerald-300">لعب سريع بنقرة واحدة ⚡</span>
+                </>
+              ) : selectedCardId ? (
                 <>
                   <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
                   <span className="text-amber-300">الكارت محدد 👆 انقر عليه ثانية للنزول</span>
@@ -908,6 +939,19 @@ export const TableBoard: React.FC<TableBoardProps> = ({
                 </>
               )}
             </div>
+
+            {onUpdateSettings && (
+              <button
+                onClick={() => {
+                  soundFx.playClick();
+                  onUpdateSettings({ singleTapPlay: !settings.singleTapPlay });
+                }}
+                className="sm:hidden px-2 py-1.5 rounded-lg bg-black/60 border border-amber-900/60 text-[10px] font-bold text-amber-300 touch-manipulation active:scale-95"
+                title="تبديل وضع الرمي"
+              >
+                {settings.singleTapPlay ? '⚡ لمسة للرمي' : '👆 نقرتين'}
+              </button>
+            )}
           </div>
 
           {/* User Profile Badge (Right Side) matching screenshot */}

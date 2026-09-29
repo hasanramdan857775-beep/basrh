@@ -1,58 +1,57 @@
 @import "tailwindcss";
 
+/* Fluid mobile scrolling & touch responsiveness */
+html, body {
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  scroll-behavior: smooth;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Fast, Snappy Hardware-Accelerated Animations */
 @keyframes cardSlideInFromBottom {
   0% {
     opacity: 0;
-    transform: translateY(120px) scale(0.85) rotate(-4deg);
-  }
-  70% {
-    transform: translateY(-8px) scale(1.02) rotate(1deg);
+    transform: translate3d(0, 60px, 0) scale(0.9) rotate(-3deg);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1) rotate(0deg);
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
   }
 }
 
 @keyframes cardSlideInFromTop {
   0% {
     opacity: 0;
-    transform: translateY(-120px) scale(0.85) rotate(4deg);
-  }
-  70% {
-    transform: translateY(8px) scale(1.02) rotate(-1deg);
+    transform: translate3d(0, -60px, 0) scale(0.9) rotate(3deg);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1) rotate(0deg);
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
   }
 }
 
 @keyframes tableCardAppear {
   0% {
     opacity: 0;
-    transform: scale(0.7) translateY(-30px) rotate(var(--rot, 0deg));
-  }
-  60% {
-    transform: scale(1.06) translateY(2px) rotate(var(--rot, 0deg));
+    transform: scale(0.8) translate3d(0, -15px, 0) rotate(var(--rot, 0deg));
   }
   100% {
     opacity: 1;
-    transform: scale(1) translateY(0) rotate(var(--rot, 0deg));
+    transform: scale(1) translate3d(0, 0, 0) rotate(var(--rot, 0deg));
   }
 }
 
 @keyframes basraShake {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  10% { transform: translate(-8px, -4px) rotate(-1.5deg); }
-  20% { transform: translate(7px, 5px) rotate(1.2deg); }
-  30% { transform: translate(-6px, 3px) rotate(-1deg); }
-  40% { transform: translate(5px, -3px) rotate(0.8deg); }
-  50% { transform: translate(-4px, 2px) rotate(-0.5deg); }
-  60% { transform: translate(3px, -1px) rotate(0.3deg); }
-  70% { transform: translate(-2px, 1px) rotate(-0.2deg); }
-  80% { transform: translate(1px, -1px) rotate(0.1deg); }
-  100% { transform: translate(0, 0) rotate(0deg); }
+  0% { transform: translate3d(0, 0, 0); }
+  25% { transform: translate3d(-5px, -3px, 0) rotate(-1deg); }
+  50% { transform: translate3d(5px, 3px, 0) rotate(1deg); }
+  75% { transform: translate3d(-3px, 2px, 0) rotate(-0.5deg); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
 @keyframes cardEatFly {
@@ -61,31 +60,35 @@
     opacity: 1;
   }
   40% {
-    transform: scale(1.15) rotate(5deg);
-    box-shadow: 0 0 25px rgba(245, 158, 11, 0.8);
+    transform: scale(1.1) rotate(3deg);
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.8);
   }
   100% {
-    transform: scale(0.2) translateY(180px);
+    transform: scale(0.2) translate3d(0, 100px, 0);
     opacity: 0;
   }
 }
 
 .animate-card-slide-bottom {
-  animation: cardSlideInFromBottom 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: cardSlideInFromBottom 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
 }
 
 .animate-card-slide-top {
-  animation: cardSlideInFromTop 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: cardSlideInFromTop 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
 }
 
 .animate-table-card-in {
-  animation: tableCardAppear 0.32s cubic-bezier(0.25, 1.25, 0.5, 1) forwards;
+  animation: tableCardAppear 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
 }
 
 .animate-basra-shake {
-  animation: basraShake 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  animation: basraShake 0.3s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 .animate-card-eat {
-  animation: cardEatFly 0.45s ease-in-out forwards;
+  animation: cardEatFly 0.22s ease-in-out forwards;
+  will-change: transform, opacity;
 }

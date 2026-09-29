@@ -61,7 +61,7 @@ export const PlayingCard: React.FC<PlayingCardProps> = ({
   if (!isFaceUp) {
     return (
       <div
-        className={`relative ${sizeStyles} overflow-hidden select-none transition-all duration-300 transform group ${
+        className={`relative ${sizeStyles} overflow-hidden select-none transition-all duration-150 transform group touch-manipulation will-change-transform ${
           isSelectable ? 'cursor-pointer hover:-translate-y-2 hover:shadow-2xl active:scale-95' : ''
         } ${isDrawing ? 'animate-card-slide-top' : ''} ${className}`}
         style={{
@@ -145,8 +145,8 @@ export const PlayingCard: React.FC<PlayingCardProps> = ({
   return (
     <div
       onClick={isSelectable && onClick ? onClick : undefined}
-      className={`relative ${sizeStyles} bg-[#FCFBF7] flex flex-col justify-between p-1.5 sm:p-2 select-none transition-all duration-300 ease-out border border-neutral-300/80 ${
-        isSelectable ? 'cursor-pointer hover:-translate-y-3.5 hover:shadow-2xl active:scale-95' : ''
+      className={`relative ${sizeStyles} bg-[#FCFBF7] flex flex-col justify-between p-1.5 sm:p-2 select-none transition-all duration-150 ease-out border border-neutral-300/80 touch-manipulation will-change-transform ${
+        isSelectable ? 'cursor-pointer hover:-translate-y-2 sm:hover:-translate-y-3.5 hover:shadow-2xl active:scale-95' : ''
       } ${
         isSelected
           ? '-translate-y-4 ring-4 ring-amber-400 shadow-[0_18px_32px_rgba(245,158,11,0.65)] scale-105 z-20'

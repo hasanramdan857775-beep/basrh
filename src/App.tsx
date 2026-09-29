@@ -215,7 +215,8 @@ export default function App() {
     voiceCallouts: true,
     showHints: true,
     cardBackId: 'classic_red',
-    fastAnimations: false,
+    fastAnimations: true,
+    singleTapPlay: true,
     jackBasraValue: 20,
     displayMode: 'auto',
   });
@@ -420,7 +421,7 @@ export default function App() {
   };
 
   return (
-    <main className="w-full h-screen bg-neutral-950 text-neutral-100 select-none overflow-hidden font-['Cairo',sans-serif]">
+    <main className="w-full min-h-[100dvh] bg-neutral-950 text-neutral-100 select-none overflow-x-hidden overflow-y-auto overscroll-y-contain font-['Cairo',sans-serif]">
       {currentScreen === 'menu' && (
         <MainMenu
           onStartGame={handleStartGame}
